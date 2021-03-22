@@ -23,6 +23,7 @@ public class Database {
 			conn = ds.getConnection();
 
 			conn.setTransactionIsolation(isolationLevel);
+			
 
 		} catch (SQLException e) {
 
