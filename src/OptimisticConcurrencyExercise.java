@@ -7,8 +7,8 @@ public class OptimisticConcurrencyExercise {
 		float amount = 0;
 
 		String readBalanceSql = "SELECT Balance FROM Account WHERE Id = ?";
-		String closeAccountSql = "UPDATE Account SET Balance = 0 WHERE Id = ?";
-		String depositSql = "UPDATE Account SET Balance = Balance + ? WHERE Id = ?";
+		String closeAccountSql = "UPDATE Account SET Balance = 0 WHERE Id = ? ";
+		String depositSql = "UPDATE Account SET Balance = Balance + ? WHERE Id = ? ";
 
 		Connection conn = Database.getConnection(0);
 

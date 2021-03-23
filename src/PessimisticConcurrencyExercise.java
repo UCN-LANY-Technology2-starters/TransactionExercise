@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class PessimisticConcurrencyExercise {
 
-	private final int isolationLevel = Connection.TRANSACTION_NONE;
+	private final int isolationLevel = Connection.TRANSACTION_REPEATABLE_READ;
 
 	public void transferAmount(int fromAccountId, int toAccountId, float amount) {
 
@@ -59,7 +59,7 @@ public class PessimisticConcurrencyExercise {
 		}
 	}
 
-	public void addInterest(int accountId, float interest) throws SQLException {
+	public void addInterest(int accountId, float interest) {
 
 		float amount = 0;
 		float interestAmount = 0;
@@ -70,39 +70,44 @@ public class PessimisticConcurrencyExercise {
 		Connection conn = Database.getConnection(isolationLevel);
 
 		try {
+			try {
 
-			conn.setAutoCommit(false);
+				conn.setAutoCommit(false);
 
-			PreparedStatement readBalance = conn.prepareStatement(readBalanceSql);
-			readBalance.setInt(1, accountId);
+				PreparedStatement readBalance = conn.prepareStatement(readBalanceSql);
+				readBalance.setInt(1, accountId);
 
-			ResultSet rs = readBalance.executeQuery();
-			if (rs.next()) {
-				amount = rs.getFloat(1);
+				ResultSet rs = readBalance.executeQuery();
+				if (rs.next()) {
+					amount = rs.getFloat(1);
 
-				Program.printMsg("Read amount: " + amount);
+					Program.printMsg("Read amount: " + amount);
 
-				interestAmount = amount * interest;
+					interestAmount = amount * interest;
 
-				PreparedStatement addInterest = conn.prepareStatement(addInterestSql);
-				addInterest.setInt(2, accountId);
-				addInterest.setFloat(1, amount + interestAmount);
+					PreparedStatement addInterest = conn.prepareStatement(addInterestSql);
+					addInterest.setInt(2, accountId);
+					addInterest.setFloat(1, amount + interestAmount);
 
-				addInterest.execute();
+					addInterest.execute();
 
-				Program.printMsg("Added interest: " + interestAmount);
+					Program.printMsg("Added interest: " + interestAmount);
+				}
+
+				conn.commit();
+
+			} catch (SQLException e) {
+
+				conn.rollback();
+				throw e;
+
+			} finally {
+
+				conn.setAutoCommit(true);
 			}
-
-			conn.commit();
-
 		} catch (SQLException e) {
-
-			conn.rollback();
-			throw e;
-
-		} finally {
-
-			conn.setAutoCommit(true);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
