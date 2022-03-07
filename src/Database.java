@@ -11,8 +11,7 @@ public class Database {
 
 		Connection conn = null;
 
-		try {
-			
+		try {			
 			// Change the values below to connect to another instance of SQL Server
 			
 			SQLServerDataSource ds = new SQLServerDataSource();

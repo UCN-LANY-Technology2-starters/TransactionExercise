@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class PessimisticConcurrencyExercise {
 
-	private final int isolationLevel = Connection.TRANSACTION_REPEATABLE_READ;
+	private final int isolationLevel = Connection.TRANSACTION_NONE;
 
 	public void transferAmount(int fromAccountId, int toAccountId, float amount) {
 

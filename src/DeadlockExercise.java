@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class DeadlockExercise {
 
-	private final int isolationLevel = Connection.TRANSACTION_READ_COMMITTED;
+	private final int isolationLevel = Connection.TRANSACTION_NONE;
 
 	public void transferAmount(int fromAccountId, int toAccountId, float amount) {
 		
