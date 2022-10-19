@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
@@ -40,6 +41,28 @@ public class DataContext {
 			System.out.println(Thread.currentThread().getName() + " - Session: " + sessionInfoRows.getInt(1)
 					+ ", IsolationLevel: " + conn.getTransactionIsolation());
 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void resetDatabase() {
+		String sql = "UPDATE Account SET Balance = 100 WHERE Id = 1; "
+				+ "UPDATE Account SET Balance = 200 WHERE Id = 2; "
+				+ "UPDATE Account SET Balance = 300 WHERE Id = 3; "
+				+ "UPDATE Users Set Age = 20 WHERE Id = 1; "
+				+ "DELETE FROM Users WHERE Id > 2";
+		
+		try {
+			
+			Connection conn = getConnection();
+			Statement resetStatement = conn.createStatement();
+			resetStatement.execute(sql);
+
+		} catch (SQLServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
