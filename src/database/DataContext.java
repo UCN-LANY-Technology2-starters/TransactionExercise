@@ -13,13 +13,13 @@ public class DataContext {
 
 	public static Connection getConnection() throws SQLServerException {
 
-		// TODO: Change the values below to connect to another instance of SQL Server
+		// TODO: Change the values below to connect to your instance of SQL Server
 
 		SQLServerDataSource ds = new SQLServerDataSource();
-		ds.setUser("student");
+		ds.setUser("sa");
 		ds.setPassword("P@$$w0rd");
-		ds.setServerName("localhost\\sqlexpress");
-		ds.setDatabaseName("TransactionExercises");
+		ds.setServerName(null); // TODO: Set this to the ip-address of your virtual machine running sql server
+		ds.setDatabaseName("TransactionExercise");
 		return ds.getConnection();
 	}
 
