@@ -1,3 +1,12 @@
+USE master;
+GO
+
+CREATE DATABASE TransactionExercise;
+GO
+
+USE TransactionExercise;
+GO
+
 CREATE TABLE [Account](
 	[Id] [int] NOT NULL,
 	[Name] [nvarchar](10) NOT NULL,
