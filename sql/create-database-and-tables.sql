@@ -1,11 +1,8 @@
-USE master;
-GO
+CREATE DATABASE TransactionExercises;
+GO 
 
-CREATE DATABASE TransactionExercise;
-GO
-
-USE TransactionExercise;
-GO
+USE TransactionExercises;
+GO 
 
 CREATE TABLE [Account](
 	[Id] [int] NOT NULL,
@@ -14,3 +11,4 @@ CREATE TABLE [Account](
 	[Type] [nchar](1) NOT NULL,
 	[Version] [timestamp] NOT NULL
 );
+GO
